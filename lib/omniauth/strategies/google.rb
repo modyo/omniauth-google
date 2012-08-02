@@ -8,20 +8,19 @@ module OmniAuth
     # Usage:
     #    use OmniAuth::Strategies::Google, 'consumerkey', 'consumersecret'
     class Google < OmniAuth::Strategies::OAuth
-      def initialize(app, consumer_key=nil, consumer_secret=nil, options={}, &block)
-        client_options = {
-          :access_token_path => '/accounts/OAuthGetAccessToken',
-          :authorize_path => '/accounts/OAuthAuthorizeToken',
-          :request_token_path => '/accounts/OAuthGetRequestToken',
-          :site => 'https://www.google.com',
-        }
-        google_contacts_auth = 'www.google.com/m8/feeds'
-        options[:scope] ||= "https://#{google_contacts_auth}"
-        options[:scope] << " https://#{google_contacts_auth}" unless options[:scope] =~ %r[http[s]?:\/\/#{google_contacts_auth}]
-        options[:client_options] = client_options
+     option :client_options, {
+    	
+        :access_token_path => '/accounts/OAuthGetAccessToken',
+ 	 	
+        :authorize_path => '/accounts/OAuthAuthorizeToken',
+ 	 	
+        :request_token_path => '/accounts/OAuthGetRequestToken',
+ 	 	
+        :site => 'https://www.google.com'
+ 	 	
+    }
 
-        super(app, consumer_key, consumer_secret, options, &block)
-      end
+    option :scope, "https://www.google.com/m8/feeds"
 
       uid do
         user_info['uid']
